@@ -20,6 +20,7 @@ If you need to use a package, you need to first download it using `install.packa
 covid_testdata <- read.csv('StatewiseTestingDetails.csv')
 ```
 
+
 ```{r}
 # Using head function to view first few rows of the data
 head(covid_testdata)

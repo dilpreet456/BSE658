@@ -1,10 +1,16 @@
 ---
-title: "Descriptive Statistics: Central and Variability measures"
-output: html_notebook
+title: 'Descriptive Statistics: Central and Variability measures'
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 ```{r}
 #Initial packages
 install.packages("lsr")
+```
+```{r}
+load("aflsmall.Rdata")
+#library(lsr)
 ```
 
 In this notebook, we'll take a look at how to explore a dataset.
@@ -34,10 +40,10 @@ That's a lot of theory, let's dive into some data now.
 
 ```{r}
 #Change the path according to your PC
-path = "/Users/lenovo1/Desktop/mtech/courses/stats/Datasets/data/"
+path = "C:/Users/HP/OneDrive/Documents/github/BSE658/Module 3/Notebooks"
 fileN ="aflsmall.Rdata"
 file_path = paste(path,fileN, sep = "")
-load(file_path)
+load("aflsmall.Rdata")
 library(lsr)
 who()
 ```
@@ -59,6 +65,48 @@ Let's try to plot it.
 ```{r}
 hist (afl.margins)
 ```
+```{r}
+mean(afl.margins)
+mean(afl.margins[1:5])
+```
+```{r}
+sumA=(6+5+9+12+8+7)
+```
+```{r}
+47/6
+```
+```{r}
+median=(6,5,9+12+8+7)
+median
+```
+```{r}
+A <-c(35,40,45,50,55)
+sum(A)
+length(A)
+sum(A)/length(A)
+median(A)
+mean(x=A, trim = .1)
+```
+```{r}
+IQR(afl.margins)
+```
+```{r}
+var (A)
+```
+```{r}
+SD(A)
+```
+```{r}
+sqrt(50)
+```
+```{r}
+IQR(dataset)
+```
+
+```{r}
+quantile (x = afl.margins)
+```
+
 
 As you can see, different margins in a sample will have different measurements. We can see this variability with a **frequency distribution**. The frequency of a specific measurement in a sample is the number of observations having a particular value of the measurement. The frequency distribution shows how often each value of the variable occurs in the sample. 
 
@@ -108,6 +156,9 @@ Now try finding out the median for afl.margins.
 #afl.median = 
 #afl.median
 ```
+```{r}
+
+```
 
 **Difference between Mean and Median**
 
@@ -144,6 +195,7 @@ Let's try trimming the mean for above data.
 ```{r}
 dataset <- c(-15,2,3,4,5,6,7,8,9,12)
 mean(x = dataset, trim = .1)
+median(dataset)
 #Try calculating 5% trimmed mean for above dataset
 ```
 
@@ -171,6 +223,12 @@ The range of a variable is very simple: it’s the biggest value minus the small
 ```{r}
 #Find range of afl.margins here
 ```
+```{r}
+quantile(x=afl.margins, prob =)
+```
+```{r}
+range(afl.margins)
+```
 
 But what about the earlier data we saw, ` -100,2,3,4,5,6,7,8,9,10`. Without removing the outlier, we'll get a range of 110 but without the outlier, we'll get a range of only 8.
 
@@ -194,6 +252,15 @@ Try finding out the variance using `var()`.
 #Use var() for finding variance of afl.margins
 ```
 
+
+
+```{r}
+var(afl.margins)
+```
+```{r}
+
+```
+
 _Read more about var() function and absolute vs squared deviations in Section 5.2.4 from Learning Statistics with R by D. Navarro_
 
 **Standard Deviation**
@@ -205,6 +272,22 @@ Try to find out the standard deviation of afl.margins.
 ```{r}
 #Find out Std dev. here
 ```
+```{r}
+summary(afl.margins)
+```
+```{r}
+describe(afl.margins)
+```
+```{r}
+blowouts <- afl.margins > 50
+blowouts
+```
+```{r}
+summary (object = blowouts)
+```
+
+
+
 
 ##### Quick cheat sheet: When to use what?
 
@@ -243,8 +326,21 @@ Let's try out summarizing a dataframe as well.
 load("clinicaltrial.Rdata")
 #Check the name of the variable in the environment which contains the dataframe and try summarizing it
 ```
+```{r}
+head(clin.trial)
+```
+```{r}
+summary(clin.trial)
+```
+
+
+```{r}
+```
 
 The `psych` package also has a function called `describe()` for dataframes. Don't forget to check it out too!
+```{r}
+describe(clin.trial)
+```
 
 In fact, you can also describe these statistics group wise. 
 
@@ -260,14 +356,19 @@ Another more general command for grouping is `by()`
 Try running the following chunk and compare the results with the `describeBy()` command above.
 
 ```{r}
-by(data=clin.trial, INDICES=clin.trial$therapy, FUN=describe)
+by(data=clin.trial, INDICES=clin.trial$therapy, FUN=summary)
 #Also try replacing describe in FUN above with summary
 ```
+```{r}
+
+```
+
+
 
 What if you have multiple grouping variables? Suppose, for example, you would like to look at the average mood gain separately for all possible combinations of drug and therapy.We can use `aggregate()` command.
 
 ```{r}
-aggregate( formula = mood.gain ~ drug + therapy, 
+aggregate( mood.gain ~ drug + therapy, 
            data = clin.trial,
            FUN = mean) 
 #1 mood.gain by drug/therapy combination
@@ -276,5 +377,133 @@ aggregate( formula = mood.gain ~ drug + therapy,
 
 #Try interchanging the positions of drug and therapy above
 ```
+```{r}
+pnorm( 3.6 )
+```
 
 That's all for today!
+
+```{r}
+load( "./data/parenthood.Rdata" )
+who(TRUE)
+```
+```{r}
+head(parenthood ,10)
+```
+```{r}
+describe( parenthood)
+```
+
+```{r}
+cor( x = parenthood$dan.sleep, y = parenthood$dan.grump )
+```
+```{r}
+cor( x = parenthood )
+```
+```{r}
+knitr::kable(
+rbind(
+c("-1.0 to -0.9" ,"Very strong", "Negative"),
+c("-0.9 to -0.7", "Strong", "Negative") ,
+c("-0.7 to -0.4", "Moderate", "Negative") ,
+c("-0.4 to -0.2", "Weak", "Negative"),
+c("-0.2 to 0","Negligible", "Negative") ,
+c("0 to 0.2","Negligible", "Positive"),
+c("0.2 to 0.4", "Weak", "Positive"), 
+c("0.4 to 0.7", "Moderate", "Positive"), 
+c("0.7 to 0.9", "Strong", "Positive"), 
+c("0.9 to 1.0", "Very strong", "Positive")), col.names=c("Correlation", "Strength", "Direction"),
+  booktabs = TRUE)
+```
+```{r}
+cor( anscombe$x1, anscombe$y1 )
+```
+```{r}
+cor( anscombe$x2, anscombe$y2 )
+```
+```{r}
+load( "effort.Rdata")
+```
+```{r}
+who(TRUE)
+ 
+-- Name --   -- Class --   -- Size --
+   effort       data.frame    10 x 2    
+    $hours      numeric       10        
+    $grade      numeric       10 
+```
+```{r}
+cor( effort$hours, effort$grade )
+```
+
+```{r}
+ hours.rank <- rank( effort$hours )   # rank students by hours worked
+grade.rank <- rank( effort$grade )   # rank students by grade received
+```
+```{r}
+cor( hours.rank, grade.rank )
+```
+```{r}
+cor( effort$hours, effort$grade, method = "spearman")
+```
+```{r}
+load("work.Rdata")
+```
+
+```{r}
+cor(work$hours,work$pay)
+```
+```{r}
+cor(work)
+```
+```{r}
+correlate(work)
+```
+
+```{r}
+correlate( work, corr.method="spearman")
+```
+
+
+```{r}
+partial <- c(10, 20, NA, 30)
+```
+```{r}
+mean( x = partial )
+```
+
+```{r}
+mean( x = partial, na.rm = TRUE )
+```
+```{r}
+load( "parenthood2.Rdata" )
+print( parenthood2 )
+ dan.sleep baby.sleep dan.grump day
+1      7.59         NA        56   1
+2      7.91      11.66        60   2
+3      5.14       7.92        82   3
+4      7.71       9.61        55   4
+5      6.68       9.75        NA   5
+6      5.99       5.04        72   6
+BLAH BLAH BLAH
+```
+```{r}
+describe( parenthood2 )
+```
+
+```{r}
+cor( parenthood2 )
+```
+
+```{r}
+cor(parenthood2, use = "complete.obs")
+```
+
+```{r}
+cor(parenthood2, use = "pairwise.complete.obs")
+```
+
+```{r}
+correlate(parenthood2)
+```
+
